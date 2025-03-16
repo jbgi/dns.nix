@@ -16,7 +16,7 @@ let
 
   combinators = import ./combinators.nix { lib = lib'; };
 
-  evalZone = name: zone:
+  evalZones = zones:
     (lib.evalModules {
       modules = [
         { options = {
@@ -26,16 +26,18 @@ let
             };
           };
           config = {
-            zones = { "${name}" = zone; };
+            inherit zones;
           };
         }
       ];
-    }).config.zones."${name}";
+    }).config.zones;
+
+  evalZone = name: zone: (evalZones { ${name} = zone; }).${name};
 
 in
 
 {
-  inherit evalZone;
+  inherit evalZones evalZone;
 
   inherit types;
 

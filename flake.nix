@@ -17,7 +17,7 @@
     in {
 
       lib = {
-        inherit (dns) evalZone;
+        inherit (dns) evalZone evalZones;
         inherit (dns) combinators;
         inherit (dns) types;
         inherit (dns) mkReverseRecord;
